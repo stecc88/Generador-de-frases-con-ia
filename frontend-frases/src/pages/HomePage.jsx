@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const API_BASE_URL = 'https://mi-generador-frases-backend.onrender.com/api';
+const API_BASE_URL = 'generador-de-frases-con-ia-6vn7.vercel.app';
+
+
 
 function HomePage() {
   const { t, i18n } = useTranslation();

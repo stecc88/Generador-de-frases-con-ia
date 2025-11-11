@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next'; 
 
-const API_BASE_URL = 'https://mi-generador-frases-backend.onrender.com/api';
+const API_BASE_URL = 'generador-de-frases-con-ia-6vn7.vercel.app';
 
 function LoginPage() {
   // 2. Inicializar i18n

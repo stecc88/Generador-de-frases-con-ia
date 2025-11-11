@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import RegistroPage from './pages/RegistroPage'
-import ProtectedRoute from './components/ProtectedRoute' // <-- 1. IMPORTAR
+import ProtectedRoute from './components/ProtectedRoute' 
 
 function App() {
   return (
