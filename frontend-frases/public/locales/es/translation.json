@@ -1,0 +1,48 @@
+{
+  "header": {
+    "titulo": "Generador de Frases",
+    "logout": "Cerrar Sesión"
+  },
+  "form": {
+    "titulo": "Generar con IA",
+    "label": "Escribe un tema (ej: \"éxito\", \"luna\", \"código\")",
+    "placeholder": "Escribe un tema...",
+    "boton": "Generar y Guardar (POST)",
+    "boton_cargando": "Generando..."
+  },
+  "lista": {
+    "titulo": "Lista de Frases Guardadas",
+    "vacia": "No hay frases guardadas. ¡Genera una!",
+    "borrar_title": "Borrar frase"
+  },
+  "alertas": {
+    "confirmar_borrado": "¿Seguro que quieres borrar la frase con ID {{id}}?",
+    "error_cargar": "Error al cargar la lista de frases",
+    "error_generar": "Error al generar la frase",
+    "error_borrar": "Error al borrar la frase"
+  },
+  "login": {
+    "titulo": "Iniciar Sesión",
+    "email_label": "Email",
+    "email_placeholder": "ejemplo@gmail.com",
+    "password_label": "Contraseña",
+    "password_placeholder": "123456",
+    "boton": "Ingresar",
+    "link_registro_pregunta": "¿No tienes cuenta?",
+    "link_registro_accion": "Regístrate aquí",
+    "link_inicio": "← Volver al inicio",
+    "error_credenciales": "Credenciales inválidas.",
+    "error_generico": "Error al iniciar sesión"
+  },
+  "registro": {
+    "titulo": "Crear Cuenta",
+    "email_label": "Email",
+    "password_label": "Contraseña (mín. 6 caracteres)",
+    "boton": "Registrarse",
+    "link_login_pregunta": "¿Ya tienes cuenta?",
+    "link_login_accion": "Inicia sesión aquí",
+    "error_largo": "La contraseña debe tener al menos 6 caracteres.",
+    "error_email_registrado": "El email ya está registrado.",
+    "exito": "¡Usuario creado con éxito! Redirigiendo al login..."
+  }
+}

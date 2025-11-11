@@ -1,0 +1,16 @@
+# 1. Dependencias (¡El más importante!)
+# Ignora la carpeta de paquetes instalados
+node_modules/
+
+# 2. Secretos
+# Ignora el archivo de variables de entorno
+.env
+
+# 3. Logs
+# Ignora archivos de log de npm o de la aplicación
+npm-debug.log*
+*.log
+
+# 4. Archivos "basura" del Sistema Operativo
+.DS_Store
+Thumbs.db

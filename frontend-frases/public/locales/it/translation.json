@@ -1,0 +1,48 @@
+{
+  "header": {
+    "titulo": "Generatore di Frasi",
+    "logout": "Esci"
+  },
+  "form": {
+    "titulo": "Genera con IA",
+    "label": "Scrivi un argomento (es: \"successo\", \"luna\", \"codice\")",
+    "placeholder": "Scrivi un argomento...",
+    "boton": "Genera e Salva (POST)",
+    "boton_cargando": "Generando..."
+  },
+  "lista": {
+    "titulo": "Elenco delle Frasi Salvate",
+    "vacia": "Nessuna frase salvata. Generane una!",
+    "borrar_title": "Cancella frase"
+  },
+  "alertas": {
+    "confirmar_borrado": "Sei sicuro di voler cancellare la frase con ID {{id}}?",
+    "error_cargar": "Errore nel caricamento dell'elenco delle frasi",
+    "error_generar": "Errore durante la generazione della frase",
+    "error_borrar": "Errore durante la cancellazione della frase"
+  },
+  "login": {
+    "titulo": "Accedi",
+    "email_label": "Email",
+    "email_placeholder": "esempio@gmail.com",
+    "password_label": "Password",
+    "password_placeholder": "123456",
+    "boton": "Entra",
+    "link_registro_pregunta": "Non hai un account?",
+    "link_registro_accion": "Registrati qui",
+    "link_inicio": "← Torna alla pagina principale",
+    "error_credenciales": "Credenziali non valide.",
+    "error_generico": "Errore durante l'accesso"
+  },
+  "registro": {
+    "titulo": "Crea Account",
+    "email_label": "Email",
+    "password_label": "Password (min. 6 caratteri)",
+    "boton": "Registrati",
+    "link_login_pregunta": "Hai già un account?",
+    "link_login_accion": "Accedi qui",
+    "error_largo": "La password deve contenere almeno 6 caratteri.",
+    "error_email_registrado": "L'email è già registrata.",
+    "exito": "Utente creato con successo! Reindirizzamento al login..."
+  }
+}
