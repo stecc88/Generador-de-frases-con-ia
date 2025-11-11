@@ -14,7 +14,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { GoogleGenAI } from "@google/genai";
 
-dotenv.config();
+
 const { Pool } = pkg;
 
 // =================================================================
