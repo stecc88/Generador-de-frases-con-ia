@@ -1,113 +1,137 @@
-# 🚀 Proyecto: Generador de Frases Full-Stack (con IA y Autenticación)
+🚀 Generador de Frases con IA — Proyecto Full-Stack (Arquitectura 3 Capas)
 
-**Ver la aplicación en vivo:**
-* **Frontend (Vercel):** `[Pega aquí tu link de Vercel]`
-* **Backend (Render):** `[Pega aquí tu link de Render (ej: ...onrender.com/api/login)]`
+Aplicación web full-stack diseñada para demostrar habilidades avanzadas en desarrollo, seguridad, despliegue y arquitectura profesional.
 
----
+🌐 Aplicación en Producción
+Componente	Servicio	Enlace
+🖥️ Frontend (Vercel)	React + Vite	👉 https://generador-de-frases-con-ia.vercel.app/registro
 
-## 💡 Resumen del Proyecto
+⚙️ Backend (Render)	Node.js + Express	👉 https://mi-generador-frases-backend.onrender.com
+💡 Resumen del Proyecto
 
-Esta es una aplicación web full-stack completa construida desde cero. Permite a los usuarios registrarse, iniciar sesión de forma segura, y generar frases inspiradoras usando la API de Google Gemini.
+Este proyecto simula un entorno de producción multi-usuario y seguro, donde los usuarios pueden autenticarse y generar frases inspiradoras mediante una API conectada a Google Gemini.
 
-El núcleo del proyecto es una arquitectura **multi-usuario segura**: cada usuario tiene su propia cuenta y solo puede ver, crear o borrar las frases que le pertenecen. La aplicación es **responsive** (se adapta a móviles) y es **bilingüe** (Español 🇪🇸 e Italiano 🇮🇹).
+Se centra en tres pilares fundamentales:
 
-## 🎬 Demo (¡Recomendado!)
+🔐 Seguridad avanzada y autenticación JWT
 
-*[Te recomiendo grabar un GIF corto (usando Giphy Capture o una herramienta similar) que muestre el flujo de la app (Registro -> Login -> Generar Frase -> Logout) y pegarlo aquí. Esto es lo primero que verá un reclutador.]*
+🧩 Arquitectura multi-capa profesional (Frontend + Backend + DB)
 
-`[Pega aquí tu GIF de demostración]`
+☁️ Despliegue real en entornos de producción (Vercel + Render + Neon)
 
----
+🧠 Desafíos Técnicos y Soluciones
+🔸 1. Autenticación y Autorización Multi-Usuario
 
-## ✨ Características Principales
+Problema: Garantizar que cada usuario solo acceda a sus propias frases.
+Solución: Se agregó una llave foránea usuario_id en la tabla frases enlazada a usuarios.
+Cada endpoint (GET, PUT, DELETE) usa WHERE usuario_id = $1, donde el ID proviene del token JWT.
+➡️ Esto evita el acceso cruzado a datos incluso manipulando IDs desde el cliente.
 
-### 1. Autenticación y Seguridad (Full-Stack)
-* **Registro de Usuarios:** Creación de usuarios con contraseñas "hasheadas" usando **`bcrypt`**.
-* **Inicio de Sesión (Login):** Verificación de credenciales y generación de un **JSON Web Token (JWT)** firmado y con tiempo de expiración.
-* **Rutas de Backend Protegidas:** Un *middleware* personalizado en el backend (`autenticarToken`) intercepta cada petición a la API. Si el `token` JWT no es válido o no existe, la petición es rechazada.
-* **Vistas de Frontend Protegidas:** Un componente (`<ProtectedRoute>`) en React redirige automáticamente a los usuarios no autenticados a la página de `/login`, protegiendo la página principal.
-* **Cierre de Sesión (Logout):** Destruye el `token` guardado en `localStorage` y redirige al login.
+🔸 2. Enrutamiento de Cliente en Vercel (React Router)
 
-### 2. Arquitectura Multi-Usuario (Multi-Tenant)
-* **Datos Privados:** La base de datos utiliza **Llaves Foráneas (Foreign Keys)**. Cada frase en la tabla `frases` está enlazada a un `usuario_id`.
-* **Lógica de API Segura:** Todas las consultas SQL (`GET`, `POST`, `PUT`, `DELETE`) están filtradas con `WHERE usuario_id = $1`. Esto garantiza que un usuario (incluso si intenta forzarlo) **nunca** pueda ver o modificar frases que no le pertenecen.
+Problema: Acceder directamente a rutas como /login producía un error 404: NOT_FOUND.
+Solución: Se creó una regla de reescritura en vercel.json para redirigir todo a index.html, permitiendo que React Router maneje las rutas internamente.
 
-### 3. Integración con IA (Google Gemini)
-* **Generación de Contenido:** Los usuarios pueden generar frases nuevas proporcionando un "tema" (ej: "éxito").
-* **Prompt Dinámico y Bilingüe:** El frontend detecta el idioma seleccionado (ES o IT) y lo envía al backend. El backend ajusta dinámicamente el *prompt* de Gemini para solicitar la frase en el idioma correcto (`"Responde ÚNICAMENTE en idioma Italiano..."`).
+// frontend-frases/vercel.json
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
 
-### 4. Interfaz de Usuario (UI/UX)
-* **Enrutamiento (Routing):** Construido como una **Single Page Application (SPA)** usando `React Router DOM`. La aplicación maneja 4 rutas (`/`, `/login`, `/registro` y la ruta protegida).
-* **Diseño Responsive:** Creado con **Tailwind CSS** usando un enfoque "Mobile-First". La interfaz se adapta fluidamente desde móviles hasta pantallas de escritorio.
-* **Internacionalización (i18n):** La aplicación es completamente bilingüe usando `i18next`. Los textos, errores y placeholders se cargan desde archivos `JSON` de traducción (`es.json`, `it.json`).
+🔸 3. Dependencias en Producción (Vercel)
 
----
+Problema: Error Cannot find module 'autoprefixer' debido a que Vercel no instala devDependencies.
+Solución: Se movieron tailwindcss, postcss y autoprefixer a dependencies en package.json.
 
-## 🧠 Desafíos Técnicos y Soluciones
+🔸 4. Variables de Entorno en Render
 
-Este proyecto fue un ejercicio completo de desarrollo full-stack que requirió resolver varios problemas clave:
+Problema: dotenv sobrescribía variables de entorno de producción.
+Solución: Se ejecuta dotenv.config() solo si NODE_ENV !== 'production' para permitir que Render inyecte sus propias variables sin conflicto.
 
-1.  **El Desafío de la Autenticación:** Implementar un sistema de login desde cero.
-    * **Solución:** Se utilizó `bcrypt` para el hasheo de contraseñas, asegurando que nunca se almacenen contraseñas en texto plano. Se usó `jsonwebtoken` (JWT) para crear un "pase" digital en el login, que el frontend guarda en `localStorage`. Este `token` se envía en el *header* `Authorization` de cada petición subsecuente.
+🏗️ Arquitectura de Despliegue (3 Capas)
+Capa	Tecnología	Servicio	Rol
+🎨 Frontend	React (Vite + TailwindCSS)	Vercel	SPA con routing cliente
+⚙️ Backend	Node.js / Express	Render	API REST segura con JWT
+🗄️ Base de Datos	PostgreSQL	Neon	Base de datos en la nube
+🧰 Tecnologías Principales
+Área	Tecnología	Descripción
+🔐 Autenticación	bcrypt, jsonwebtoken	Hash seguro + Tokens JWT con expiración
+🤖 Integración IA	Google Gemini SDK	Generación dinámica de frases
+🎨 Estilos	Tailwind CSS	Diseño responsive “Mobile-First”
+🌍 Internacionalización	i18next	Soporte multilenguaje (ES / IT)
+🧱 ORM / Querys	pg	Conexión segura a PostgreSQL
+⚙️ Instalación y Ejecución Local
+🖥️ Backend (backend-frases)
+cd backend-frases
+npm install
 
-2.  **El Desafío de la "Fuga de Datos":** Evitar que el "Usuario A" viera las frases del "Usuario B".
-    * **Solución:** Se implementó una arquitectura de base de datos relacional. La tabla `frases` se diseñó con una columna `usuario_id` que actúa como una **Llave Foránea (Foreign Key)**, enlazándola a la tabla `usuarios`. Cada consulta de la API (ej: `GET /api/frases`) fue filtrada usando el `id` del usuario (extraído del JWT verificado) con un `WHERE usuario_id = $1`.
 
-3.  **El Desafío del Despliegue (Deployment):** Una aplicación full-stack no puede desplegarse en un solo lugar como Vercel, ya que el backend (un servidor Express) necesita estar "encendido" 24/7.
-    * **Solución:** Se implementó una arquitectura de **3 niveles**:
-        1.  **Frontend (React):** Desplegado en **Vercel** para la mayor velocidad de entrega estática.
-        2.  **Backend (Node/Express):** Desplegado en **Render** (un servicio PaaS) que mantiene el servidor `app.listen()` corriendo.
-        3.  **Base de Datos (PostgreSQL):** Desplegada en **Neon** (un proveedor de bases de datos serverless en la nube) para que sea accesible desde cualquier lugar.
+Crea la base de datos PostgreSQL y ejecuta el script SQL con las tablas usuarios y frases.
 
-4.  **El Desafío de la Configuración de Producción:** El servidor de Render fallaba porque `dotenv` (usado para `localhost`) interfería con las variables de entorno de producción.
-    * **Solución:** Se modificó el `index.js` del backend para que `dotenv.config()` **solo** se ejecute si `process.env.NODE_ENV !== 'production'`, permitiendo que Render inyecte sus propias variables de forma segura.
+Crea el archivo .env con:
 
----
+DATABASE_URL=postgresql://TU_URL
+GEMINI_API_KEY=TU_API_KEY
+JWT_SECRET=tu_secreto_seguro
 
-## 🛠️ Stack de Tecnologías
 
-| Área | Tecnología | Propósito |
-| :--- | :--- | :--- |
-| **Frontend** | React (con Vite) | UI reactiva y moderna. |
-| | React Router DOM | Enrutamiento de páginas (SPA). |
-| | Tailwind CSS | Estilizado "utility-first" y responsive. |
-| | i18next | Internacionalización (bilingüe). |
-| **Backend** | Node.js (ES Modules) | Entorno de ejecución del servidor. |
-| | Express | Framework para la API RESTful. |
-| | PostgreSQL | Base de datos relacional. |
-| | `node-pg` | "Driver" de conexión a PostgreSQL. |
-| **Seguridad** | `bcrypt` | Hasheo de contraseñas. |
-| | `jsonwebtoken` (JWT) | Creación y verificación de tokens de sesión. |
-| | `cors` | Habilitar la comunicación entre dominios. |
-| **APIs** | Google Gemini | Generación de frases por IA. |
-| **Despliegue** | **Vercel** (Frontend) | Hosting estático de alta velocidad. |
-| | **Render** (Backend) | Hosting de servicios web (Node.js). |
-| | **Neon** (Base de Datos) | Hosting de PostgreSQL en la nube. |
+Ejecuta:
 
----
+npm run dev
 
-## ⚙️ Instalación y Puesta en Marcha Local
 
-Este proyecto es un **monorepo** que contiene dos carpetas: `backend-frases` y `frontend-frases`. Para ejecutar la aplicación localmente, **ambas deben estar corriendo al mismo tiempo** en dos terminales separadas.
+👉 El backend correrá en: http://localhost:3000
 
-### 1. Configuración del Backend (Servidor)
+💻 Frontend (frontend-frases)
+cd frontend-frases
+npm install
+npm run dev
 
-1.  Navega a la carpeta del backend: `cd backend-frases`
-2.  Instala las dependencias: `npm install`
-3.  **Configura la Base de Datos (PostgreSQL):**
-    * Crea una base de datos local (ej: `frases_app`).
-    * Ejecuta el script SQL (incluido en `README.md` o `backend-frases/setup.sql`) para crear las tablas `usuarios` y `frases`.
-4.  **Configura las Variables de Entorno:**
-    * Crea un archivo `.env` en la raíz de `backend-frases`.
-    * Copia el contenido de `README.md` (sección "Instalación") y rellena tus claves de `DB_...`, `GEMINI_API_KEY` y `JWT_SECRET`.
-5.  **Ejecuta el servidor backend:** `npm run dev`
-    * El backend estará corriendo en `http://localhost:3000`.
 
-### 2. Configuración del Frontend (Cliente)
+👉 El frontend se abrirá en: http://localhost:5173
 
-1.  Abre una **nueva terminal**.
-2.  Navega a la carpeta del frontend: `cd frontend-frases`
-3.  Instala las dependencias: `npm install`
-4.  **Ejecuta el servidor frontend:** `npm run dev`
-    * El frontend se abrirá en `http://localhost:5173`.
+🎮 Uso de la Aplicación
+
+Abre http://localhost:5173
+
+Regístrate con un nuevo usuario
+
+Inicia sesión
+
+Genera frases (solo visibles para tu cuenta)
+
+Borra o visualiza tus frases personales
+
+🧱 Estructura del Proyecto
+/generador-de-frases
+│
+├── backend-frases/
+│   ├── index.js
+│   ├── routes/
+│   ├── controllers/
+│   ├── middlewares/
+│   ├── models/
+│   └── db/
+│
+└── frontend-frases/
+    ├── src/
+    │   ├── pages/
+    │   ├── components/
+    │   ├── context/
+    │   └── hooks/
+    └── public/
+
+🧑‍💻 Autor
+
+Stecco Pedro Hernan
+Full Stack Developer — MERN / PostgreSQL / Gemini API
+📧 steccoh88@gmail.com
+
+🌐 LinkedIn
+ | GitHub
+
+⭐ Si te gusta este proyecto, considera darle una estrella en GitHub para apoyar su desarrollo.
