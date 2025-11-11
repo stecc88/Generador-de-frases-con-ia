@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 const API_BASE_URL = 'https://mi-generador-frases-backend.onrender.com/api';
 
+
+
 function HomePage() {
   const { t, i18n } = useTranslation();
   const [listaDeFrases, setListaDeFrases] = useState([]);
