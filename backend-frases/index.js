@@ -4,6 +4,11 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
+// Ejecuta dotenv.config() si NO estamos en producción
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 import pkg from "pg";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
