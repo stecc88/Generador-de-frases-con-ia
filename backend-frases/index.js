@@ -4,12 +4,17 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
+// Ejecuta dotenv.config() si NO estamos en producción
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 import pkg from "pg";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { GoogleGenAI } from "@google/genai";
 
-dotenv.config();
+
 const { Pool } = pkg;
 
 // =================================================================
@@ -19,12 +24,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// --- Configuración de PostgreSQL ---
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  // Esta línea lee la URL de Neon desde una variable de entorno
+  connectionString: process.env.DATABASE_URL,
+  
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 // --- Cliente de Gemini (usa GEMINI_API_KEY desde el entorno)

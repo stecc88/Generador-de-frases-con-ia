@@ -8,6 +8,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "type": "module",
   "dependencies": {
     "@google/genai": "^1.29.0",
     "bcrypt": "^6.0.0",

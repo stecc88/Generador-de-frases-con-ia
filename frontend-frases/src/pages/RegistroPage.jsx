@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next'; 
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'https://mi-generador-frases-backend.onrender.com/api';
 
 function RegistroPage() {
   // 2. Inicializar i18n
